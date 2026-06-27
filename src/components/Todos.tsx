@@ -46,9 +46,14 @@ const Todos = () => {
   }, []);
 
   if (filtered.length === 0) {
+    const messages: Record<string, string> = {
+      all: 'No todos yet. Add one above!',
+      active: 'No active todos. Great job!',
+      completed: 'No completed todos yet.',
+    };
     return (
       <div className="py-12 text-center text-gray-500 dark:text-gray-400">
-        {todos.length === 0 ? 'No todos yet. Add one above!' : 'No todos match your filter.'}
+        {todos.length === 0 ? messages.all : messages[filter]}
       </div>
     );
   }

@@ -30,7 +30,7 @@ const ToDo = memo(({ todo }: Props) => {
 
   return (
     <article
-      className={`mb-2 rounded-lg border-l-4 bg-white p-3 shadow transition dark:bg-gray-800 ${priorityColors[todo.priority]} ${todo.completed ? 'opacity-60' : ''}`}
+      className={`mb-2 rounded-lg border-l-4 bg-white p-3 shadow transition hover:shadow-md dark:bg-gray-800 ${priorityColors[todo.priority]} ${todo.completed ? 'opacity-60' : ''}`}
     >
       <div className="flex items-center gap-3">
         <input
@@ -66,11 +66,18 @@ const ToDo = memo(({ todo }: Props) => {
           </span>
         )}
         <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-          {todo.dueDate && (
-            <span className={new Date(todo.dueDate) < new Date() && !todo.completed ? 'font-bold text-red-500' : ''}>
-              {todo.dueDate}
-            </span>
-          )}
+          {todo.dueDate && (() => {
+            const due = new Date(todo.dueDate);
+            const today = new Date();
+            const isOverdue = due < today && !todo.completed;
+            const isToday = due.toDateString() === today.toDateString();
+            const isTomorrow = new Date(today.getTime() + 86400000).toDateString() === due.toDateString();
+            return (
+              <span className={`${isOverdue ? 'font-bold text-red-500' : isToday ? 'text-orange-500' : ''}`}>
+                {isToday ? 'Today' : isTomorrow ? 'Tomorrow' : todo.dueDate}
+              </span>
+            );
+          })()}
           <span className="rounded bg-gray-200 px-1.5 py-0.5 dark:bg-gray-700">{todo.category}</span>
         </div>
         <button onClick={handleDelete} className="text-red-500 hover:text-red-700" aria-label={`Delete ${todo.title}`}>&times;</button>
