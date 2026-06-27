@@ -19,11 +19,12 @@ const Dashboard = () => {
   const total = todos.length;
   const done = todos.filter(t => t.completed).length;
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const emoji = pct === 100 ? '🎉' : pct >= 50 ? '👍' : pct > 0 ? '💪' : '📋';
   const counts = priorityCounts(todos);
 
   return (
     <div className="mb-4 rounded-lg bg-white p-4 shadow dark:bg-gray-800">
-      <h2 className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">Dashboard</h2>
+      <h2 className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">Dashboard {emoji}</h2>
       <div className="mb-3">
         <div className="mb-1 flex justify-between text-xs text-gray-600 dark:text-gray-400">
           <span>Progress</span>
