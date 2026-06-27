@@ -1,10 +1,7 @@
 import React from 'react'
 
 type TodoType = {
-    todo: {
-        id: number;
-        title: string;
-    }
+    todo: TodoType
 }
 
 const ToDo = (props: TodoType) => {
