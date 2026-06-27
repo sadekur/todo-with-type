@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { TodoType } from '../types';
 import { useTodo } from '../context/TodoContext';
 
@@ -12,7 +12,7 @@ const priorityColors = {
   high: 'border-red-400',
 };
 
-const ToDo = ({ todo }: Props) => {
+const ToDo = memo(({ todo }: Props) => {
   const { state, dispatch } = useTodo();
   const [editing, setEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(todo.title);
@@ -76,6 +76,6 @@ const ToDo = ({ todo }: Props) => {
       </div>
     </article>
   );
-};
+});
 
 export default ToDo;

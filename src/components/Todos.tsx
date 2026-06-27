@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import ToDo from './Todo';
 import { useTodo } from '../context/TodoContext';
 
@@ -7,7 +7,7 @@ const Todos = () => {
   const { todos, filter, search, sortBy } = state;
   const dragItem = useRef<number | null>(null);
 
-  const filtered = todos
+  const filtered = useMemo(() => todos
     .filter(t => {
       if (filter === 'active') return !t.completed;
       if (filter === 'completed') return t.completed;
@@ -22,7 +22,7 @@ const Todos = () => {
         return order[a.priority] - order[b.priority];
       }
       return 0;
-    });
+    }), [todos, filter, search, sortBy]);
 
   const handleDragStart = useCallback((id: number) => {
     dragItem.current = id;
