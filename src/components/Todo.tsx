@@ -1,6 +1,13 @@
 import React from 'react'
 
-const ToDo = () => {
+type TodoType = {
+    todo: {
+        id: number;
+        title: string;
+    }[]
+}
+
+const ToDo = (props: TodoType) => {
   return (
     <div>
       
