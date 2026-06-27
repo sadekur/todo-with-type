@@ -3,6 +3,7 @@ import ToDo from './Todo';
 import { TodoType } from '../types';
 type TodosType = {
     todos: TodoType[]
+    handleDelete: Function
 }
 
 const Todos = (props: TodosType) => {
