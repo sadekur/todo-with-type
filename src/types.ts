@@ -19,7 +19,10 @@ export type TodoAction =
   | { type: 'EDIT'; payload: { id: number; title: string } }
   | { type: 'REORDER'; payload: TodoType[] }
   | { type: 'CLEAR_COMPLETED' }
-  | { type: 'SET'; payload: TodoType[] };
+  | { type: 'SET'; payload: TodoType[] }
+  | { type: 'SET_FILTER'; payload: Filter }
+  | { type: 'SET_SEARCH'; payload: string }
+  | { type: 'SET_SORT'; payload: SortBy };
 
 export type TodoState = {
   todos: TodoType[];

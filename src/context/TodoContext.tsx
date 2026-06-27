@@ -44,6 +44,12 @@ function todoReducer(state: TodoState, action: TodoAction): TodoState {
       return { ...state, todos: state.todos.filter(t => !t.completed) };
     case 'SET':
       return { ...state, todos: action.payload };
+    case 'SET_FILTER':
+      return { ...state, filter: action.payload };
+    case 'SET_SEARCH':
+      return { ...state, search: action.payload };
+    case 'SET_SORT':
+      return { ...state, sortBy: action.payload };
     default:
       return state;
   }
