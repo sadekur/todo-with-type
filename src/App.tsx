@@ -5,6 +5,7 @@ import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import AddTodo from './components/AddTodo';
 import BulkActions from './components/BulkActions';
 import DarkModeToggle from './components/DarkModeToggle';
+import ExportImport from './components/ExportImport';
 import ShortcutHint from './components/ShortcutHint';
 import FilterBar from './components/FilterBar';
 import SearchBar from './components/SearchBar';
@@ -35,6 +36,7 @@ function AppContent() {
           <DarkModeToggle />
         </div>
         <AddTodo />
+        <ExportImport />
         <ShortcutHint />
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <FilterBar />
