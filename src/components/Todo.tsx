@@ -10,7 +10,7 @@ type TodoType = {
 const ToDo = (props: TodoType) => {
   return (
     <div>
-      
+      Todo
     </div>
   )
 }
