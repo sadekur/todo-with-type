@@ -17,6 +17,7 @@ const FilterBar = () => {
         <button
           key={f.value}
           onClick={() => dispatch({ type: 'SET_FILTER', payload: f.value })}
+          aria-label={`Filter: ${f.label}`}
           className={`rounded px-3 py-1 text-sm font-medium transition ${
             state.filter === f.value
               ? 'bg-blue-600 text-white'

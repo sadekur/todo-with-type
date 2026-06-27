@@ -16,6 +16,7 @@ const SortSelector = () => {
       value={state.sortBy}
       onChange={e => dispatch({ type: 'SET_SORT', payload: e.target.value as SortBy })}
       className="rounded border border-gray-300 px-2 py-1 text-xs dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+      aria-label="Sort todos"
     >
       {options.map(o => (
         <option key={o.value} value={o.value}>{o.label}</option>

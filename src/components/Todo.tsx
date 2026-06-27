@@ -18,6 +18,7 @@ const ToDo = memo(({ todo }: Props) => {
   const [editTitle, setEditTitle] = useState(todo.title);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const selected = state.selectedIds.includes(todo.id);
+  const isOverdue = todo.dueDate ? new Date(todo.dueDate) < new Date() && !todo.completed : false;
 
   const handleToggle = () => dispatch({ type: 'TOGGLE', payload: todo.id });
   const handleDelete = () => {
@@ -35,7 +36,7 @@ const ToDo = memo(({ todo }: Props) => {
 
   return (
     <article
-      className={`mb-2 rounded-lg border-l-4 bg-white p-3 shadow transition hover:shadow-md dark:bg-gray-800 ${priorityColors[todo.priority]} ${todo.completed ? 'opacity-60' : ''}`}
+      className={`mb-2 rounded-lg border-l-4 bg-white p-3 shadow transition hover:shadow-md dark:bg-gray-800 ${isOverdue ? 'border-red-500' : priorityColors[todo.priority]} ${todo.completed ? 'opacity-60' : ''}`}
     >
       <div className="flex items-center gap-3">
         <input
