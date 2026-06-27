@@ -18,8 +18,12 @@ const todoData = [
 
 function App() {
   const [todos, setTodos] = useState(todoData);
+
+  const handleDelete = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  }
   return (
-   <div><Todos todos={todos} /></div>
+   <div><Todos todos={todos} handleDelete={handleDelete} /></div>
   );
 }
 
