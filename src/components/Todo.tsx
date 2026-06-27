@@ -8,15 +8,15 @@ type Props = {
 
 const ToDo = (props: Props) => {
 
-    const handleDelete = (id: number) => {
-
+    const deleteTodo = (id: number) => {
+        handleDelete(id)
     }
 
     const { id, title } = props.todo
   return (
     <article>
         <h3>{id} - {title}</h3>
-        <button onClick={(() => {handleDelete(id)})}>Delete</button>
+        <button onClick={(() => {deleteTodo(id)})}>Delete</button>
     </article>
   )
 }
