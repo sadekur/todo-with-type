@@ -38,13 +38,14 @@ const ToDo = memo(({ todo }: Props) => {
           checked={selected}
           onChange={() => dispatch({ type: 'TOGGLE_SELECT', payload: todo.id })}
           className="h-4 w-4 rounded border-gray-300"
-          title="Select for bulk action"
+          aria-label={`Select ${todo.title}`}
         />
         <input
           type="checkbox"
           checked={todo.completed}
           onChange={handleToggle}
           className="h-4 w-4 rounded border-gray-300"
+          aria-label={`Mark ${todo.title} as ${todo.completed ? 'incomplete' : 'complete'}`}
         />
         {editing ? (
           <input
@@ -72,7 +73,7 @@ const ToDo = memo(({ todo }: Props) => {
           )}
           <span className="rounded bg-gray-200 px-1.5 py-0.5 dark:bg-gray-700">{todo.category}</span>
         </div>
-        <button onClick={handleDelete} className="text-red-500 hover:text-red-700">&times;</button>
+        <button onClick={handleDelete} className="text-red-500 hover:text-red-700" aria-label={`Delete ${todo.title}`}>&times;</button>
       </div>
     </article>
   );

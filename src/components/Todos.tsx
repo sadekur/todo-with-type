@@ -53,21 +53,51 @@ const Todos = () => {
     );
   }
 
+  if (filter !== 'all') {
+    return (
+      <div>
+        {filtered.map((todo, i) => (
+          <div
+            key={todo.id}
+            draggable={sortBy === 'createdAt'}
+            onDragStart={() => handleDragStart(todo.id)}
+            onDragOver={e => handleDragOver(e, todo.id)}
+            onDragEnd={handleDragEnd}
+            className="animate-fadeIn"
+            style={{ animationDelay: `${i * 30}ms` }}
+          >
+            <ToDo todo={todo} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const activeTodos = filtered.filter(t => !t.completed);
+  const completedTodos = filtered.filter(t => t.completed);
+
   return (
     <div>
-      {filtered.map((todo, i) => (
-        <div
-          key={todo.id}
-          draggable={sortBy === 'createdAt'}
-          onDragStart={() => handleDragStart(todo.id)}
-          onDragOver={e => handleDragOver(e, todo.id)}
-          onDragEnd={handleDragEnd}
-          className="animate-fadeIn"
-          style={{ animationDelay: `${i * 30}ms` }}
-        >
-          <ToDo todo={todo} />
+      {activeTodos.length > 0 && (
+        <div className="mb-4">
+          <h3 className="mb-2 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Active</h3>
+          {activeTodos.map((todo, i) => (
+            <div key={todo.id} draggable={sortBy === 'createdAt'} onDragStart={() => handleDragStart(todo.id)} onDragOver={e => handleDragOver(e, todo.id)} onDragEnd={handleDragEnd} className="animate-fadeIn" style={{ animationDelay: `${i * 30}ms` }}>
+              <ToDo todo={todo} />
+            </div>
+          ))}
         </div>
-      ))}
+      )}
+      {completedTodos.length > 0 && (
+        <div>
+          <h3 className="mb-2 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Completed</h3>
+          {completedTodos.map((todo, i) => (
+            <div key={todo.id} draggable={sortBy === 'createdAt'} onDragStart={() => handleDragStart(todo.id)} onDragOver={e => handleDragOver(e, todo.id)} onDragEnd={handleDragEnd} className="animate-fadeIn" style={{ animationDelay: `${i * 30}ms` }}>
+              <ToDo todo={todo} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
