@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { TodoProvider } from './context/TodoContext';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
@@ -7,6 +7,7 @@ import BulkActions from './components/BulkActions';
 import Dashboard from './components/Dashboard';
 import DarkModeToggle from './components/DarkModeToggle';
 import ExportImport from './components/ExportImport';
+import HelpModal from './components/HelpModal';
 import ShortcutHint from './components/ShortcutHint';
 import FilterBar from './components/FilterBar';
 import SearchBar from './components/SearchBar';
@@ -17,6 +18,7 @@ import Todos from './components/Todos';
 
 function AppContent() {
   useLocalStorage();
+  const [helpOpen, setHelpOpen] = useState(false);
   const shortcuts = useMemo(() => ({
     n: () => {
       const input = document.querySelector<HTMLInputElement>('[data-focus="add-todo"]');
@@ -27,6 +29,7 @@ function AppContent() {
       input?.focus();
       input?.select();
     },
+    '?': () => setHelpOpen(v => !v),
   }), []);
   useKeyboardShortcuts(shortcuts);
   return (
@@ -49,6 +52,7 @@ function AppContent() {
         <Stats />
         <Todos />
         <Toast />
+        <HelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />
       </div>
     </div>
   );
