@@ -31,6 +31,7 @@ const AddTodo = () => {
           value={title}
           onChange={e => setTitle(e.target.value)}
           placeholder="Add a new todo..."
+          data-focus="add-todo"
           className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"
         />
         <button
