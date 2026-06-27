@@ -25,6 +25,13 @@ npm run build   # production build to build/
 - Build output (gitignored): `/build`
 - Coverage output (gitignored): `/coverage`
 
+## Tailwind CSS
+
+- Tailwind CSS v3 is configured via `postcss.config.js` + `tailwind.config.js` (the PostCSS plugin approach, not CLI).
+- `tailwind.config.js` content paths scan `./src/**/*.{js,jsx,ts,tsx}`.
+- Directives (`@tailwind base/components/utilities`) are in `src/index.css`.
+- Do not use the Tailwind CLI — CRA's webpack handles PostCSS automatically.
+
 ## Gotchas
 
 - Do not add a separate TypeScript compilation step. CRA uses Babel for transpilation; `tsc` is type-check only (`noEmit: true`).
