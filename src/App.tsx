@@ -4,6 +4,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import AddTodo from './components/AddTodo';
 import BulkActions from './components/BulkActions';
+import Dashboard from './components/Dashboard';
 import DarkModeToggle from './components/DarkModeToggle';
 import ExportImport from './components/ExportImport';
 import ShortcutHint from './components/ShortcutHint';
@@ -38,6 +39,7 @@ function AppContent() {
         <AddTodo />
         <ExportImport />
         <ShortcutHint />
+        <Dashboard />
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <FilterBar />
           <SortSelector />
