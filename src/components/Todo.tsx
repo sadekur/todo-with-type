@@ -16,10 +16,15 @@ const ToDo = memo(({ todo }: Props) => {
   const { state, dispatch } = useTodo();
   const [editing, setEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(todo.title);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const selected = state.selectedIds.includes(todo.id);
 
   const handleToggle = () => dispatch({ type: 'TOGGLE', payload: todo.id });
-  const handleDelete = () => dispatch({ type: 'DELETE', payload: todo.id });
+  const handleDelete = () => {
+    if (!confirmDelete) { setConfirmDelete(true); return; }
+    dispatch({ type: 'DELETE', payload: todo.id });
+    setConfirmDelete(false);
+  };
 
   const handleEdit = () => {
     if (editTitle.trim()) {
@@ -80,7 +85,14 @@ const ToDo = memo(({ todo }: Props) => {
           })()}
           <span className="rounded bg-gray-200 px-1.5 py-0.5 dark:bg-gray-700">{todo.category}</span>
         </div>
-        <button onClick={handleDelete} className="text-red-500 hover:text-red-700" aria-label={`Delete ${todo.title}`}>&times;</button>
+        {confirmDelete ? (
+          <div className="flex gap-1">
+            <button onClick={() => setConfirmDelete(false)} className="text-xs text-gray-500 hover:underline">No</button>
+            <button onClick={() => { dispatch({ type: 'DELETE', payload: todo.id }); setConfirmDelete(false); }} className="text-xs font-bold text-red-600 hover:underline">Yes</button>
+          </div>
+        ) : (
+          <button onClick={handleDelete} className="text-red-500 hover:text-red-700" aria-label={`Delete ${todo.title}`}>&times;</button>
+        )}
       </div>
     </article>
   );
