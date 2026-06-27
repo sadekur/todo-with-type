@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { TodoType } from '@/lib/types'
 import { updateTodo, deleteTodo } from '@/lib/api'
 
-type Props = { todo: TodoType; onChanged: () => void }
+type Props = { todo: TodoType; onChanged: () => void; onDelete?: (todo: TodoType) => void }
 
 const priorityColors: Record<string, string> = {
   low: 'border-green-400',
@@ -12,7 +12,7 @@ const priorityColors: Record<string, string> = {
   high: 'border-red-400',
 }
 
-export default function ToDo({ todo, onChanged }: Props) {
+export default function ToDo({ todo, onChanged, onDelete }: Props) {
   const [editing, setEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(todo.title)
 
@@ -24,8 +24,12 @@ export default function ToDo({ todo, onChanged }: Props) {
   }
 
   const handleDelete = async () => {
-    await deleteTodo(todo._id)
-    onChanged()
+    if (onDelete) {
+      onDelete(todo)
+    } else {
+      await deleteTodo(todo._id)
+      onChanged()
+    }
   }
 
   const handleEdit = async () => {

@@ -12,7 +12,7 @@
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-98a0bdaa30757bda.js",
       "static/chunks/main-app-d09a911b022b902b.js",
-      "static/css/4166ef9f81b593b2.css",
+      "static/css/0784146c2358782d.css",
       "static/chunks/app/layout-63e176c5f7254fe3.js"
     ],
     "/api/todos/[id]/route": [
@@ -34,7 +34,7 @@
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-98a0bdaa30757bda.js",
       "static/chunks/main-app-d09a911b022b902b.js",
-      "static/chunks/app/page-642884e572842103.js"
+      "static/chunks/app/page-fa50c461c63c91cc.js"
     ]
   }
 }
