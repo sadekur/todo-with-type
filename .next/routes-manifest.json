@@ -28,7 +28,20 @@
       "namedRegex": "^/api/todos/(?<nxtPid>[^/]+?)(?:/)?$"
     }
   ],
-  "staticRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    }
+  ],
   "dataRoutes": [],
   "rsc": {
     "header": "rsc",
