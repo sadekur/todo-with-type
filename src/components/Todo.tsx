@@ -1,18 +1,12 @@
 import React from 'react'
-import { TodoType } from '../types';
+import { Props, TodoType } from '../types';
 
-type Props = {
-    todo: TodoType,
-    handleDelete: Function
-}
 
 const ToDo = (props: Props) => {
-
+    const { id, title } = props.todo
     const deleteTodo = (id: number) => {
         props.handleDelete(id)
     }
-
-    const { id, title } = props.todo
   return (
     <article>
         <h3>{id} - {title}</h3>
