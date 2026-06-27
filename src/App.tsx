@@ -19,7 +19,7 @@ const todoData = [
 function App() {
   const [todos, setTodos] = useState(todoData);
   return (
-   <div><Todos todos={todoData} /></div>
+   <div><Todos todos={todos} /></div>
   );
 }
 
