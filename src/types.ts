@@ -13,7 +13,7 @@ export type Filter = 'all' | 'active' | 'completed';
 export type SortBy = 'createdAt' | 'title' | 'priority';
 
 export type TodoAction =
-  | { type: 'ADD'; payload: Omit<TodoType, 'id' | 'createdAt'> }
+  | { type: 'ADD'; payload: Omit<TodoType, 'id' | 'createdAt' | 'completed'> }
   | { type: 'DELETE'; payload: number }
   | { type: 'TOGGLE'; payload: number }
   | { type: 'EDIT'; payload: { id: number; title: string } }

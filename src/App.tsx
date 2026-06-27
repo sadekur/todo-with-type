@@ -1,29 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { TodoProvider } from './context/TodoContext';
 import Todos from './components/Todos';
-
-const todoData = [
-  {
-    id: 1,
-    title: "Learn React",
-  },
-  {
-    id: 2,
-    title: "Learn Vue",
-  },
-  {
-    id: 3,
-    title: "Learn Angular",
-  }
-]
+import AddTodo from './components/AddTodo';
 
 function App() {
-  const [todos, setTodos] = useState(todoData);
-
-  const handleDelete = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  }
   return (
-   <div><Todos todos={todos} handleDelete={handleDelete} /></div>
+    <TodoProvider>
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="mx-auto max-w-2xl px-4 py-8">
+          <h1 className="mb-6 text-center text-3xl font-bold text-gray-800 dark:text-white">
+            Todo App
+          </h1>
+          <AddTodo />
+          <Todos />
+        </div>
+      </div>
+    </TodoProvider>
   );
 }
 
