@@ -8,10 +8,12 @@ type TodoType = {
 }
 
 const ToDo = (props: TodoType) => {
+
+    const { id, title } = props.todo
   return (
-    <div className='text-black/50 text-2xl text-[#FF0000]'>
-      Todo
-    </div>
+    <article>
+        <h3>{id} - {title}</h3>
+    </article>
   )
 }
 
