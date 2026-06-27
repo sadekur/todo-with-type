@@ -3,38 +3,62 @@
 ## Commands
 
 ```bash
-npm start       # dev server at localhost:3000
-npm test        # Jest watch mode (via react-scripts)
-npm run build   # production build to build/
+npm start                       # dev server at localhost:3000
+npm test                        # Jest watch mode (press `a` for all, `q` to quit)
+npm run build                   # production build to build/
+npx tsc --noEmit                # standalone type-checking (not in npm scripts)
 ```
-
-- `npm test` launches Jest in interactive watch mode by default. Press `a` to run all tests, `q` to quit.
-- There is no separate `lint` or `typecheck` script. `react-scripts` bundles ESLint (react-app config) and TypeScript checking into its dev server and build pipeline.
 
 ## Stack
 
 - **React 19** + **TypeScript 4.9.5** bootstrapped via **Create React App** (`react-scripts 5.0.1`)
-- **Testing**: Jest + `@testing-library/react` (pre-configured via CRA). `src/setupTests.ts` imports `@testing-library/jest-dom`.
-- **No Redux yet** — the repo name anticipates it, but no store or reducers exist.
+- **Testing**: Jest + `@testing-library/react` (13 tests across 5 suites). `src/setupTests.ts` imports `@testing-library/jest-dom` and mocks `window.matchMedia`.
+- **Tailwind CSS v3** via PostCSS plugin (content paths in `tailwind.config.js`, dark mode uses `class` strategy)
+- **State management**: React Context + `useReducer` (`src/context/TodoContext.tsx`), no Redux
+- **No separate ESLint/typecheck npm scripts** — CRA bundles both in dev server and build pipeline
 
 ## Structure
 
-- Entrypoint: `src/index.tsx` → renders `<App />` from `src/App.tsx`
-- `tsconfig.json`: `strict: true`, `jsx: "react-jsx"`, target `es5`, `noEmit: true` (TypeScript is for type-checking only, Babel compiles)
-- ESLint config is inline in `package.json` (extends `react-app` + `react-app/jest`)
-- Build output (gitignored): `/build`
-- Coverage output (gitignored): `/coverage`
+```
+src/
+  __tests__/App.test.tsx
+  context/TodoContext.tsx        ← Provider + reducer (ADD, DELETE, TOGGLE, EDIT, REORDER, etc.)
+  hooks/
+    useDarkMode.ts               ← localStorage-persisted dark mode toggle
+    useKeyboardShortcuts.ts      ← global hotkeys (N, /, ?, Esc)
+    useLocalStorage.ts           ← persist todos to localStorage
+  types.ts                       ← TodoType, Filter, SortBy, TodoAction, TodoState
+  components/
+    AddTodo.tsx                  ← form with priority, due date, category fields
+    BulkActions.tsx              ← bulk select/deselect, mark done, delete
+    Dashboard.tsx                ← progress bar + priority breakdown
+    DarkModeToggle.tsx           ← sun/moon toggle
+    ExportImport.tsx             ← JSON export/import via file download/upload
+    FilterBar.tsx                ← All / Active / Completed
+    HelpModal.tsx                ← keyboard shortcuts reference
+    SearchBar.tsx                ← text search
+    ShortcutHint.tsx             ← inline hotkey hints
+    SortSelector.tsx             ← sort by date / title / priority
+    Stats.tsx                    ← total/active/completed counts + clear completed button
+    Toast.tsx                    ← undo delete notification (5s timeout)
+    Todo.tsx                     ← single item: toggle, inline edit, priority color, delete, drag handle
+    Todos.tsx                    ← filtered/sorted list with HTML5 drag-and-drop reorder
+  __tests__/                     ← per-component tests
+```
 
-## Tailwind CSS
+## Key Facts
 
-- Tailwind CSS v3 is configured via `postcss.config.js` + `tailwind.config.js` (the PostCSS plugin approach, not CLI).
-- `tailwind.config.js` content paths scan `./src/**/*.{js,jsx,ts,tsx}`.
-- Directives (`@tailwind base/components/utilities`) are in `src/index.css`.
-- Do not use the Tailwind CLI — CRA's webpack handles PostCSS automatically.
+- `index.css` (with `@tailwind` directives) must be imported in `src/index.tsx` — otherwise Tailwind won't generate classes
+- `tsconfig.json`: `strict: true`, `jsx: "react-jsx"`, `noEmit: true` (Babel transpiles, tsc only checks)
+- `forceConsistentCasingInFileNames: true` — import paths must match filename casing exactly
+- Shared types live in `src/types.ts` — always import from there instead of redefining
+- Dark mode toggles the `dark` class on `<html>` — Tailwind's `dark:` variants work via `darkMode: 'class'`
+- Drag-and-drop reorder only activates when sort is set to "Newest" (createdAt)
+- `useLocalStorage` must be called inside `TodoProvider` (it uses `useTodo` internally)
 
-## Gotchas
+## Testing
 
-- Do not add a separate TypeScript compilation step. CRA uses Babel for transpilation; `tsc` is type-check only (`noEmit: true`).
-- `react-scripts test` overrides Jest config. Do not add a separate `jest.config.js` without ejecting or using `react-app-rewired`.
-- `.env.local` files are gitignored by default.
-- React 19 is installed — check compatibility before adding libraries that pinned to React 18.
+- Test files go in `src/**/__tests__/*.test.{ts,tsx}` or `src/**/*.{spec,test}.{ts,tsx}`
+- Run focused test: `npm test -- --watchAll=false --testPathPattern="ComponentName"`
+- `window.matchMedia` mock is in `src/setupTests.ts` — required for any test rendering `DarkModeToggle`
+- `beforeEach(() => localStorage.clear())` is needed in every test suite to avoid cross-test pollution
