@@ -22,11 +22,14 @@ export type TodoAction =
   | { type: 'SET'; payload: TodoType[] }
   | { type: 'SET_FILTER'; payload: Filter }
   | { type: 'SET_SEARCH'; payload: string }
-  | { type: 'SET_SORT'; payload: SortBy };
+  | { type: 'SET_SORT'; payload: SortBy }
+  | { type: 'UNDO_DELETE' }
+  | { type: 'DISMISS_UNDO' };
 
 export type TodoState = {
   todos: TodoType[];
   filter: Filter;
   search: string;
   sortBy: SortBy;
+  lastDeleted: TodoType | null;
 };

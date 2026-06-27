@@ -7,6 +7,7 @@ import FilterBar from './components/FilterBar';
 import SearchBar from './components/SearchBar';
 import SortSelector from './components/SortSelector';
 import Stats from './components/Stats';
+import Toast from './components/Toast';
 import Todos from './components/Todos';
 
 function AppContent() {
@@ -26,6 +27,7 @@ function AppContent() {
         <SearchBar />
         <Stats />
         <Todos />
+        <Toast />
       </div>
     </div>
   );

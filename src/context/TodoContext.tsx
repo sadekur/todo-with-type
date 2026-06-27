@@ -6,6 +6,7 @@ const initialState: TodoState = {
   filter: 'all',
   search: '',
   sortBy: 'createdAt',
+  lastDeleted: null,
 };
 
 function todoReducer(state: TodoState, action: TodoAction): TodoState {
@@ -22,8 +23,10 @@ function todoReducer(state: TodoState, action: TodoAction): TodoState {
       };
       return { ...state, todos: [newTodo, ...state.todos] };
     }
-    case 'DELETE':
-      return { ...state, todos: state.todos.filter(t => t.id !== action.payload) };
+    case 'DELETE': {
+      const deleted = state.todos.find(t => t.id === action.payload) || null;
+      return { ...state, todos: state.todos.filter(t => t.id !== action.payload), lastDeleted: deleted };
+    }
     case 'TOGGLE':
       return {
         ...state,
@@ -50,6 +53,15 @@ function todoReducer(state: TodoState, action: TodoAction): TodoState {
       return { ...state, search: action.payload };
     case 'SET_SORT':
       return { ...state, sortBy: action.payload };
+    case 'UNDO_DELETE':
+      if (!state.lastDeleted) return state;
+      return {
+        ...state,
+        todos: [state.lastDeleted, ...state.todos],
+        lastDeleted: null,
+      };
+    case 'DISMISS_UNDO':
+      return { ...state, lastDeleted: null };
     default:
       return state;
   }
