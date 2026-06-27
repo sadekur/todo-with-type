@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { TodoType, Filter, SortBy } from '@/lib/types'
-import { fetchTodos, updateTodo, deleteTodo } from '@/lib/api'
+import { fetchTodos, createTodo, updateTodo, deleteTodo } from '@/lib/api'
 import { useKeyboardShortcuts } from '@/lib/useKeyboardShortcuts'
 import ToDo from './Todo'
 import AddTodo from './AddTodo'
@@ -64,11 +64,7 @@ export default function Todos() {
 
   const handleUndo = async () => {
     if (!toast?.deleted) return
-    await fetch('/api/todos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(toast.deleted),
-    })
+    await createTodo(toast.deleted)
     setToast(null)
     load()
   }

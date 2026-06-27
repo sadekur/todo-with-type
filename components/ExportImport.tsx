@@ -21,8 +21,9 @@ export default function ExportImport({ todos, onImported }: Props) {
     const text = await file.text()
     const data = JSON.parse(text)
     if (!Array.isArray(data)) return
+    const API_HOST = process.env.NEXT_PUBLIC_API_HOST || 'http://localhost:5000'
     await Promise.all(data.map((item: Partial<TodoType>) =>
-      fetch('/api/todos', {
+      fetch(`${API_HOST}/api/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: item.title, priority: item.priority, dueDate: item.dueDate, category: item.category }),

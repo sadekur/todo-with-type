@@ -1,6 +1,7 @@
 import { TodoType } from './types'
 
-const BASE = '/api/todos'
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST || 'http://localhost:5000'
+const BASE = `${API_HOST}/api/todos`
 
 export async function fetchTodos(): Promise<TodoType[]> {
   const res = await fetch(BASE)
