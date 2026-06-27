@@ -37,7 +37,12 @@ function AppContent() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="mx-auto max-w-2xl px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Todo App</h1>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Todo App</h1>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+            </p>
+          </div>
           <DarkModeToggle />
         </div>
         <AddTodo />
