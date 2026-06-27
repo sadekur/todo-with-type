@@ -2,13 +2,14 @@ import React from 'react'
 import { TodoType } from '../types';
 
 type Props = {
-    todo: TodoType
+    todo: TodoType,
+    handleDelete: Function
 }
 
 const ToDo = (props: Props) => {
 
     const handleDelete = (id: number) => {
-        
+
     }
 
     const { id, title } = props.todo

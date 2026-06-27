@@ -9,7 +9,7 @@ type TodosType = {
 const Todos = (props: TodosType) => {
   return (
     <div>
-      {props.todos.map((todo) => ( <ToDo key={todo.id} todo={todo} /> ))}
+      {props.todos.map((todo) => ( <ToDo key={todo.id} todo={todo} handleDelete={props.handleDelete} /> ))}
     </div>
   )
 }
