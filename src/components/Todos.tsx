@@ -1,5 +1,5 @@
 import React from 'react'
-import ToDo from './ToDo';
+import ToDo from './Todo';
 type TodosType = {
     todos: {
         id: number;

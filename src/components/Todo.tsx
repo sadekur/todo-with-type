@@ -4,7 +4,7 @@ type TodoType = {
     todo: {
         id: number;
         title: string;
-    }[]
+    }
 }
 
 const ToDo = (props: TodoType) => {
