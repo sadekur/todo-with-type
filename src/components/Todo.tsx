@@ -9,7 +9,7 @@ type TodoType = {
 
 const ToDo = (props: TodoType) => {
   return (
-    <div>
+    <div className='text-black/50 text-2xl text-[#FF0000]'>
       Todo
     </div>
   )
