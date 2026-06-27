@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import ToDo from './Todo';
 import { useTodo } from '../context/TodoContext';
 
 const Todos = () => {
-  const { state } = useTodo();
+  const { state, dispatch } = useTodo();
   const { todos, filter, search, sortBy } = state;
+  const dragItem = useRef<number | null>(null);
 
   const filtered = todos
     .filter(t => {
@@ -14,13 +15,35 @@ const Todos = () => {
     })
     .filter(t => t.title.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
+      if (sortBy === 'createdAt') return b.createdAt - a.createdAt;
       if (sortBy === 'title') return a.title.localeCompare(b.title);
       if (sortBy === 'priority') {
         const order = { high: 0, medium: 1, low: 2 };
         return order[a.priority] - order[b.priority];
       }
-      return b.createdAt - a.createdAt;
+      return 0;
     });
+
+  const handleDragStart = useCallback((id: number) => {
+    dragItem.current = id;
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent, id: number) => {
+    e.preventDefault();
+    if (dragItem.current === null || dragItem.current === id) return;
+    const fromIndex = todos.findIndex(t => t.id === dragItem.current);
+    const toIndex = todos.findIndex(t => t.id === id);
+    if (fromIndex === -1 || toIndex === -1) return;
+    const reordered = [...todos];
+    const [moved] = reordered.splice(fromIndex, 1);
+    reordered.splice(toIndex, 0, moved);
+    dragItem.current = id;
+    dispatch({ type: 'REORDER', payload: reordered });
+  }, [todos, dispatch]);
+
+  const handleDragEnd = useCallback(() => {
+    dragItem.current = null;
+  }, []);
 
   if (filtered.length === 0) {
     return (
@@ -33,7 +56,15 @@ const Todos = () => {
   return (
     <div>
       {filtered.map(todo => (
-        <ToDo key={todo.id} todo={todo} />
+        <div
+          key={todo.id}
+          draggable={sortBy === 'createdAt'}
+          onDragStart={() => handleDragStart(todo.id)}
+          onDragOver={e => handleDragOver(e, todo.id)}
+          onDragEnd={handleDragEnd}
+        >
+          <ToDo todo={todo} />
+        </div>
       ))}
     </div>
   );
