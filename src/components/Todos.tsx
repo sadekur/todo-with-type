@@ -1,6 +1,12 @@
 import React from 'react'
+type TodosType = {
+    todos: {
+        id: number;
+        title: string;
+    }[]
+}
 
-const Todos = ({todos}) => {
+const Todos = (props: TodosType) => {
   return (
     <div>
       
