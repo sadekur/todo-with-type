@@ -7,3 +7,8 @@ export type Props = {
     todo: TodoType,
     handleDelete: Function
 }
+
+export type TodosType = {
+    todos: TodoType[]
+    handleDelete: Function
+}

@@ -1,10 +1,6 @@
 import React from 'react'
 import ToDo from './Todo';
-import { TodoType } from '../types';
-type TodosType = {
-    todos: TodoType[]
-    handleDelete: Function
-}
+import { TodosType } from '../types';
 
 const Todos = (props: TodosType) => {
   return (
