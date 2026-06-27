@@ -1,10 +1,8 @@
 import React from 'react'
 import ToDo from './Todo';
+import { TodoType } from '../types';
 type TodosType = {
-    todos: {
-        id: number;
-        title: string;
-    }[]
+    todos: TodoType[]
 }
 
 const Todos = (props: TodosType) => {

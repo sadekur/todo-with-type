@@ -1,10 +1,11 @@
 import React from 'react'
+import { TodoType } from '../types';
 
-type TodoType = {
+type Props = {
     todo: TodoType
 }
 
-const ToDo = (props: TodoType) => {
+const ToDo = (props: Props) => {
 
     const { id, title } = props.todo
   return (
