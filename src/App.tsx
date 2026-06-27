@@ -6,6 +6,7 @@ import AddTodo from './components/AddTodo';
 import BulkActions from './components/BulkActions';
 import Dashboard from './components/Dashboard';
 import DarkModeToggle from './components/DarkModeToggle';
+import ErrorBoundary from './components/ErrorBoundary';
 import ExportImport from './components/ExportImport';
 import HelpModal from './components/HelpModal';
 import ShortcutHint from './components/ShortcutHint';
@@ -61,7 +62,9 @@ function AppContent() {
 function App() {
   return (
     <TodoProvider>
-      <AppContent />
+      <ErrorBoundary>
+        <AppContent />
+      </ErrorBoundary>
     </TodoProvider>
   );
 }

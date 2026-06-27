@@ -55,13 +55,15 @@ const Todos = () => {
 
   return (
     <div>
-      {filtered.map(todo => (
+      {filtered.map((todo, i) => (
         <div
           key={todo.id}
           draggable={sortBy === 'createdAt'}
           onDragStart={() => handleDragStart(todo.id)}
           onDragOver={e => handleDragOver(e, todo.id)}
           onDragEnd={handleDragEnd}
+          className="animate-fadeIn"
+          style={{ animationDelay: `${i * 30}ms` }}
         >
           <ToDo todo={todo} />
         </div>
