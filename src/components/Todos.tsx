@@ -1,4 +1,5 @@
 import React from 'react'
+import ToDo from './ToDo';
 type TodosType = {
     todos: {
         id: number;
@@ -9,7 +10,7 @@ type TodosType = {
 const Todos = (props: TodosType) => {
   return (
     <div>
-      
+      {props.todos.map((todo) => ( <ToDo key={todo.id} todo={todo} /> ))}
     </div>
   )
 }
