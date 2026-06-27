@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Todos from './components/Todos';
 
 const todoData = [
@@ -17,6 +17,7 @@ const todoData = [
 ]
 
 function App() {
+  const [todos, setTodos] = useState(todoData);
   return (
    <div><Todos todos={todoData} /></div>
   );
