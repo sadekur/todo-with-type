@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTodo } from '../context/TodoContext';
 
 const BulkActions = () => {
   const { state, dispatch } = useTodo();
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const count = state.selectedIds.length;
   if (count === 0) return null;
+
+  const handleDelete = () => {
+    if (!confirmDelete) {
+      setConfirmDelete(true);
+      return;
+    }
+    dispatch({ type: 'BULK_DELETE', payload: state.selectedIds });
+    setConfirmDelete(false);
+  };
 
   return (
     <div className="mb-4 flex items-center gap-3 rounded-lg bg-blue-50 px-4 py-2 dark:bg-blue-900/30">
@@ -27,11 +37,16 @@ const BulkActions = () => {
           Mark done
         </button>
         <button
-          onClick={() => dispatch({ type: 'BULK_DELETE', payload: state.selectedIds })}
-          className="rounded bg-red-600 px-3 py-1 text-xs text-white hover:bg-red-700"
+          onClick={handleDelete}
+          className={`rounded px-3 py-1 text-xs text-white ${confirmDelete ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
         >
-          Delete
+          {confirmDelete ? 'Confirm?' : 'Delete'}
         </button>
+        {confirmDelete && (
+          <button onClick={() => setConfirmDelete(false)} className="text-xs text-gray-500 hover:underline">
+            Cancel
+          </button>
+        )}
       </div>
     </div>
   );
