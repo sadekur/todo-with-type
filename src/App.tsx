@@ -3,6 +3,7 @@ import { TodoProvider } from './context/TodoContext';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import AddTodo from './components/AddTodo';
+import BulkActions from './components/BulkActions';
 import DarkModeToggle from './components/DarkModeToggle';
 import ShortcutHint from './components/ShortcutHint';
 import FilterBar from './components/FilterBar';
@@ -40,6 +41,7 @@ function AppContent() {
           <SortSelector />
         </div>
         <SearchBar />
+        <BulkActions />
         <Stats />
         <Todos />
         <Toast />

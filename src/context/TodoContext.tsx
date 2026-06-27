@@ -7,6 +7,7 @@ const initialState: TodoState = {
   search: '',
   sortBy: 'createdAt',
   lastDeleted: null,
+  selectedIds: [],
 };
 
 function todoReducer(state: TodoState, action: TodoAction): TodoState {
@@ -62,6 +63,41 @@ function todoReducer(state: TodoState, action: TodoAction): TodoState {
       };
     case 'DISMISS_UNDO':
       return { ...state, lastDeleted: null };
+    case 'BULK_DELETE':
+      return { ...state, todos: state.todos.filter(t => !action.payload.includes(t.id)) };
+    case 'BULK_TOGGLE':
+      return {
+        ...state,
+        todos: state.todos.map(t =>
+          action.payload.includes(t.id) ? { ...t, completed: action.completed } : t
+        ),
+      };
+    case 'TOGGLE_SELECT': {
+      const exists = state.selectedIds.includes(action.payload);
+      return {
+        ...state,
+        selectedIds: exists
+          ? state.selectedIds.filter(id => id !== action.payload)
+          : [...state.selectedIds, action.payload],
+      };
+    }
+    case 'SELECT_ALL': {
+      const visibleIds = state.todos
+        .filter(t => {
+          if (state.filter === 'active') return !t.completed;
+          if (state.filter === 'completed') return t.completed;
+          return true;
+        })
+        .filter(t => t.title.toLowerCase().includes(state.search.toLowerCase()))
+        .map(t => t.id);
+      const allSelected = visibleIds.every(id => state.selectedIds.includes(id));
+      return {
+        ...state,
+        selectedIds: allSelected ? [] : visibleIds,
+      };
+    }
+    case 'CLEAR_SELECTION':
+      return { ...state, selectedIds: [] };
     default:
       return state;
   }

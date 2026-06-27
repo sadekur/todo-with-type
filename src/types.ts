@@ -24,7 +24,12 @@ export type TodoAction =
   | { type: 'SET_SEARCH'; payload: string }
   | { type: 'SET_SORT'; payload: SortBy }
   | { type: 'UNDO_DELETE' }
-  | { type: 'DISMISS_UNDO' };
+  | { type: 'DISMISS_UNDO' }
+  | { type: 'BULK_DELETE'; payload: number[] }
+  | { type: 'BULK_TOGGLE'; payload: number[]; completed: boolean }
+  | { type: 'TOGGLE_SELECT'; payload: number }
+  | { type: 'SELECT_ALL' }
+  | { type: 'CLEAR_SELECTION' };
 
 export type TodoState = {
   todos: TodoType[];
@@ -32,4 +37,5 @@ export type TodoState = {
   search: string;
   sortBy: SortBy;
   lastDeleted: TodoType | null;
+  selectedIds: number[];
 };

@@ -13,9 +13,10 @@ const priorityColors = {
 };
 
 const ToDo = ({ todo }: Props) => {
-  const { dispatch } = useTodo();
+  const { state, dispatch } = useTodo();
   const [editing, setEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(todo.title);
+  const selected = state.selectedIds.includes(todo.id);
 
   const handleToggle = () => dispatch({ type: 'TOGGLE', payload: todo.id });
   const handleDelete = () => dispatch({ type: 'DELETE', payload: todo.id });
@@ -32,6 +33,13 @@ const ToDo = ({ todo }: Props) => {
       className={`mb-2 rounded-lg border-l-4 bg-white p-3 shadow transition dark:bg-gray-800 ${priorityColors[todo.priority]} ${todo.completed ? 'opacity-60' : ''}`}
     >
       <div className="flex items-center gap-3">
+        <input
+          type="checkbox"
+          checked={selected}
+          onChange={() => dispatch({ type: 'TOGGLE_SELECT', payload: todo.id })}
+          className="h-4 w-4 rounded border-gray-300"
+          title="Select for bulk action"
+        />
         <input
           type="checkbox"
           checked={todo.completed}
