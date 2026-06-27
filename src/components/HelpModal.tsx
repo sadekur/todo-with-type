@@ -7,6 +7,7 @@ const shortcuts = [
   { key: '/', desc: 'Focus search input' },
   { key: 'Esc', desc: 'Blur current input / cancel edit' },
   { key: '?', desc: 'Toggle this help modal' },
+  { key: 'Esc', desc: 'Close this help modal' },
 ];
 
 const HelpModal = ({ open, onClose }: Props) => {

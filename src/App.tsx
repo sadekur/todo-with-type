@@ -31,6 +31,7 @@ function AppContent() {
       input?.select();
     },
     '?': () => setHelpOpen(v => !v),
+    Escape: () => setHelpOpen(false),
   }), []);
   useKeyboardShortcuts(shortcuts);
   return (
